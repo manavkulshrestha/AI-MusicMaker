@@ -1,4 +1,3 @@
-import pygame as pg
 import pygame.midi as pm
 import time
 
@@ -53,4 +52,4 @@ def play_sequence(seq, cf):
 # play_sequence(test_sequence, test_cf)
 
 del player
-pg.midi.quit()
+pm.quit()
