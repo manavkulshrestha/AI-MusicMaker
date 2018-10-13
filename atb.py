@@ -80,7 +80,7 @@ for i, x in enumerate(input_[1:]):
 print(cantus_firmus)
 
 base_tree = [[[]] for i in range(11)]
-base_tree[0] = [[Node(Note(cantus_firmus[0].letter,-1), 0)]]
+base_tree[0] = [[Node(Note(cantus_firmus[0].letter,-1), children_index=0, parent_index=None)]]
 
 print(base_tree)
 
@@ -89,7 +89,7 @@ def is_legal(cf_note, base_note):
 	x = base_note.letter
 	if x in [legal_dict[cf_note.letter]]:
 		return True
-
+	return True
 
 #base tree generation
 for i in range(0, len(cantus_firmus)-1):
@@ -97,6 +97,7 @@ for i in range(0, len(cantus_firmus)-1):
 	cf_delta_mag = abs(cantus_firmus[i+1][0])
 	cf_note = Note(cantus_firmus[i+1][1].letter,0)
 
+	parent_link = 0
 	for children in base_tree[i]:
 		for child in children:
 			possibilities_delta = None
@@ -112,12 +113,13 @@ for i in range(0, len(cantus_firmus)-1):
 			for delta in possibilities_delta:
 				base_note = num_to_note(child.note.get_num()+delta,-1);
 				if is_legal(cf_note, base_note):
-					new_children.append(Node(base_note, children_link))
+					new_children.append(Node(base_note, children_index=children_link, parent_index=parent_link))
 					children_link += 1
 
 			base_tree[i+1].append(new_children)
 			if(base_tree[i+1][0] == []):
 				del base_tree[i+1][0]
+			parent_link += 1
 
 print(base_tree)
 
