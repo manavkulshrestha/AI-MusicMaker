@@ -56,9 +56,9 @@ base_tree[0] = [[Node(cantus_firmus[0], 0)]]
 
 print(base_tree)
 
-def is_legal(cf_note, base_note):
+def is_dissonant(cf_note, base_note):
 	#checks if base note is legal as per cantus firmus
-	return True
+	return False
 
 #base tree generation
 for i in range(0, len(cantus_firmus)-1):
@@ -69,9 +69,7 @@ for i in range(0, len(cantus_firmus)-1):
 	for children in base_tree[i]:
 		for child in children:
 			possibilities_delta = None
-
-			if cf_delta_mag == 0:
-				possibilities_delta = list(range(-1, 2))#TODO - ask Max. Possible, even?
+			
 			elif cf_delta_mag == 1:
 				#step
 				possibilities_delta = list(range(-1, 2))#TODO - ask Max
@@ -82,7 +80,7 @@ for i in range(0, len(cantus_firmus)-1):
 			new_children = []
 			for delta in possibilities_delta:
 				base_note = num_to_note(note_to_num(child.note)+delta);
-				if is_legal(cf_note_num, base_note):
+				if not is_dissonant(cf_note_num, base_note):
 					new_children.append(Node(base_note, children_link))
 					children_link += 1
 
