@@ -1,1 +1,2 @@
-import p
+import pygame.display
+
